@@ -1,0 +1,8 @@
+Project's home: https://www.hexstreamsoft.com/libraries/canonicalized-initargs/
+
+
+Provides a :canonicalize slot option accepting an initarg canonicalization function.
+
+
+This library is in the Public Domain.
+See the UNLICENSE file for details.

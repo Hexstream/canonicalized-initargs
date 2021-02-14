@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="canonical" href="https://www.hexstreamsoft.com/libraries/canonicalized-initargs/" />
+    <meta name="author" content="Jean-Philippe Paradis" />
+    <link rel="author" href="https://abc.hexstream.xyz/" />
+    <link rel="license" href="https://www.hexstreamsoft.com/UNLICENSE" />
+    <meta name="description" content="Provides a :canonicalize slot option accepting an initarg canonicalization function." />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>canonicalized-initargs | Libraries | HexstreamSoft</title>
+    <link href="https://www.hexstreamsoft.com/css/global.css" rel="stylesheet" type="text/css" />
+    <link href="https://www.hexstreamsoft.com/libraries/libraries.css" rel="stylesheet" type="text/css" />
+    <link href="https://global.hexstreamsoft.com/css/cl-definitions.css" rel="stylesheet" type="text/css" />
+    <link href="index.css" rel="stylesheet" type="text/css" />
+    <script src="https://global.hexstreamsoft.com/scripts/global.js"></script>
+    <script src="https://www.hexstreamsoft.com/scripts/global.js"></script>
+    <script src="https://www.hexstreamsoft.com/libraries/libraries.js" defer></script>
+  </head>
+
+  <body>
+
+    <nav id="top-nav">
+
+      <div class="main">
+
+        <div class="breadcrumbs">
+          <a href="https://www.hexstreamsoft.com/">HexstreamSoft</a>
+          <span class="crumb"><span class="s"> » </span><a href="https://www.hexstreamsoft.com/libraries/">Libraries</a></span>
+          <span class="crumb"><span class="s"> » </span><a class="here">canonicalized-initargs</a></span>
+        </div>
+
+        <nav class="tabs" id="meta-nav">
+          <ul>
+            <li><a class="github" href="https://github.com/Hexstream/canonicalized-initargs"><span>See on GitHub</span></a></li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <p id="last-updated"><span>This page was last updated on </span><time datetime="2021-02-14">14 february 2021</time><span>.</span></p>
+
+    </nav>
+
+    <main>
+
+      <header id="page-header">
+        <h1>canonicalized-initargs</h1>
+      </header>
+
+      <div class="tags contains-groups">
+        <div class="group prominent">
+          <span class="tag hv license">
+            <span class="h">License<span>:</span></span>
+            <span class="v">Public Domain</span>
+          </span>
+          <span class="s">, </span>
+          <span class="tag hv quicklisp">
+            <span class="h">Load it with Quicklisp<span>:</span></span>
+            <code class="v">(ql:quickload "canonicalized-initargs")</code>
+          </span>
+        </div>
+        <div class="group">
+          <span class="tag hv">
+            <span class="h">Library type<span>:</span></span>
+            <span class="v">Convenience feature</span>
+          </span>
+          <span class="s">, </span>
+          <span class="tag hv">
+            <span class="h">Project complexity<span>:</span></span>
+            <span class="v">Simple/Medium</span>
+          </span>
+        </div>
+      </div>
+
+      <nav class="tabs" id="further-info">
+        <ul>
+          <li><a href="https://www.hexstreamsoft.com/libraries/releases/latest-versions/#canonicalized-initargs">Latest release</a></li>
+          <li><a href="https://www.hexstreamsoft.com/libraries/dependencies/#canonicalized-initargs">Dependencies</a></li>
+        </ul>
+        <ul>
+          <li><a href="https://www.hexstreamsoft.com/libraries/external-pages-xref/#canonicalized-initargs">External library pages</a></li>
+        </ul>
+      </nav>
+
+      <section id="introduction">
+
+        <p>
+          <dfn><code class="relevant">canonicalized-initargs</code></dfn> provides a :canonicalize slot option
+          <br />
+          accepting an initarg canonicalization function.
+        </p>
+
+      </section>
+
+      <nav class="tabs">
+        <ul>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#dictionary">Dictionary</a></li>
+        </ul>
+      </nav>
+
+      <section id="overview">
+
+        <h1 class="breadcrumbs-bar">
+          <span class="section-relative-nav">
+            <a href="#overview" class="anchor">⚓</a>
+          </span>
+          <span class="breadcrumbs">
+            <a class="here">Overview</a>
+          </span>
+        </h1>
+
+        <p>Traditionally, there has been no standard way to canonicalize slot values. For instance, you might declare a slot as having type string, but prefer to let the user specify any string designator. In this situation, there are various suboptimal approaches you could take:</p>
+
+        <ul>
+
+          <li>
+            <p>Give up and let the user specify a string designator and store that value directly, coercing it to a string when reading the slot's value. This is semantically nauseating and inefficient, and could compromise correctness and the debugging experience.</p>
+          </li>
+
+          <li>
+            <p>Give up and force the user to specify the canonicalized value (a string). This is maximally convenient for the implementor, but fairly inconvenient for the user.</p>
+          </li>
+
+          <li>
+            <p>Let the user specify a string designator, and correctly canonicalize it to a string internally before storing it in the slot. This is maximally convenient for the user, but fairly inconvenient for the implementor, especially as there is no idiomatic way to do this. <a href="https://twitter.com/HexstreamSoft/status/1085038328611774464" target="_blank" class="tweet">It took me 10+ years to find the best way to do this without infrastructure</a>, and it's still fairly inconvenient for the implementor. This could be made easier with a macro, but it's still semantically suboptimal. It would basically be a <em>design pattern</em>, and as Alan Kay said, <q>Design patterns are for when you run out of language</q>. It can also be a great burden to properly document the specific canonicalization strategy you chose, especially as canonicalization is incredibly often desirable.</p>
+          </li>
+
+        </ul>
+
+        <p>The complete lack of built-in support for slot value canonicalization (or even of a standard idiom for it) might be seen as one of the biggest <em>unacknowledged</em> blind spots in the Common Lisp language. (Although most programming languages probably share that limitation.)</p>
+
+        <p><cite>canonicalized-initargs</cite> implements the platonically ideal solution using the <a href="https://clos-mop.hexstreamsoft.com/" target="_blank">MOP</a>. You can just pass <code>:canonicalize #'string</code> as a slot option and the corresponding initarg will be canonicalized! There is also a <code>:canonicalize</code> class option (similar to <code>:default-initargs</code>) to canonicalize initargs not necessarily associated with slots.</p>
+
+        <p>This is a very intuitive and broadly useful killer app for the <a href="https://clos-mop.hexstreamsoft.com/" target="_blank">MOP</a>!</p>
+
+        <p>This library is currently undocumented, sorry. See note on Libraries page.</p>
+
+      </section>
+
+      <section id="dictionary">
+
+        <h1 class="breadcrumbs-bar">
+          <span class="section-relative-nav">
+            <a href="#dictionary" class="anchor">⚓</a>
+          </span>
+          <span class="breadcrumbs">
+            <a class="here">Dictionary</a>
+          </span>
+        </h1>
+
+        <nav class="tabs">
+          <ul>
+            <li><a href="#dictionary_canon-initargs"><span class="type">Package</span> <code>canon-initargs</code></a></li>
+          </ul>
+        </nav>
+
+        <section id="dictionary_canon-initargs">
+
+          <h1 class="breadcrumbs-bar">
+            <span class="section-relative-nav">
+              <a href="#dictionary_canon-initargs" class="anchor">⚓</a>
+            </span>
+            <span class="breadcrumbs">
+              <a href="#dictionary">Dictionary</a>
+              <span class="crumb"><span class="s"> » </span><a class="here">canon-initargs</a></span>
+            </span>
+          </h1>
+
+          <article class="package definition">
+
+            <h1><span class="type">Package</span> <span class="name self">canon-initargs</span></h1>
+
+            <section class="description">
+              <h1>Description</h1>
+              <p>This package is also nicknamed <code class="relevant">canonicalized-initargs</code>.</p>
+              <p>All symbols from this package should normally be explicitly qualified, such as <code class="relevant"><a href="#dictionary_standard-class">canon-initargs:standard-class</a></code>.<br />Don't <code>(:use)</code>!</p>
+            </section>
+
+          </article>
+
+        </section>
+
+      </section>
+
+    </main>
+
+    <footer id="footer">
+      <div class="back-to-top left">
+        <a href="#">⬆</a>
+      </div>
+      <div class="main">
+        <a href="https://validator.w3.org/check?uri=http%3A%2F%2Fwww.hexstreamsoft.com%2Flibraries%2Fcanonicalized-initargs%2F">✔ HTML5</a>
+        <a href="https://www.hexstreamsoft.com/README">✔ Public Domain</a>
+        <a href="https://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fwww.hexstreamsoft.com%2Flibraries%2Fcanonicalized-initargs%2F">✔ CSS3</a>
+        <a>✔ Mobile-friendly</a>
+      </div>
+      <div class="back-to-top right">
+        <a href="#">⬆</a>
+      </div>
+    </footer>
+
+  </body>
+</html>
