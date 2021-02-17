@@ -13,7 +13,7 @@
                "object-class"
                "enhanced-typep")
 
-  :version "1.0"
+  :version "1.0.1"
   :serial cl:t
   :components ((:file "package")
                (:file "shared")

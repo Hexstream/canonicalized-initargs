@@ -12,6 +12,7 @@
 
 
 (defmethod make-instance :around ((class canon-initargs:early-canonicalization-class) &rest initargs)
+  (c2mop:ensure-finalized class)
   (apply #'call-next-method class
          (canon-initargs:canonicalize-initargs 'make-instance class initargs)))
 
