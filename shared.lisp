@@ -10,17 +10,8 @@
 (defmethod object-class:autosuperclass ((class canon-initargs:class))
   (list (find-class 'canon-initargs:object)))
 
-(defmethod c2mop:validate-superclass ((class canon-initargs:class) (superclass canon-initargs:class))
-  t)
 
-(defmethod c2mop:validate-superclass ((class canon-initargs:class) superclass)
-  (let ((superclass-metaclass (class-of superclass)))
-    (or (eq superclass-metaclass (load-time-value (find-class 'c2mop:standard-class)))
-        (eq superclass-metaclass (load-time-value (find-class 'c2mop:funcallable-standard-class)))
-        (call-next-method))))
-
-
-(defgeneric canon-initargs:canonicalize-initargs (operation class initargs))
+(defgeneric canon-initargs:canonicalize-initargs (operation instance initargs))
 
 (defun %combine-canonicalizers (canonicalizers)
   (check-type canonicalizers cons)

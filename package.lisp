@@ -10,7 +10,8 @@
            #:early-canonicalization-class
            #:early-canonicalization-object
 
-           #:canonicalization-mixin
+           #:canonicalization-class
+           #:canonicalization-object
            #:map-initarg-canonicalizers
 
            #:canonicalized-slot-initargs-class
@@ -24,4 +25,5 @@
            #:map-direct-class-initargs-canonicalizers
            #:map-class-initargs-canonicalizers
 
-           #:standard-class))
+           #:standard-class
+           #:standard-object))

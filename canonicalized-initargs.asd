@@ -13,12 +13,12 @@
                "object-class"
                "enhanced-typep")
 
-  :version "1.0.1"
+  :version "2.0"
   :serial cl:t
   :components ((:file "package")
                (:file "shared")
                (:file "canonicalization-strategy")
-               (:file "canonicalization-mixin")
+               (:file "canonicalization-class")
                (:file "slot-initargs")
                (:file "class-initargs")
                (:file "standard"))
